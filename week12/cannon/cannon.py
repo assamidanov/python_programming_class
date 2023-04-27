@@ -115,6 +115,8 @@ class Target:
         """
         pass  #todo
 
+class Bomb:
+    pass
 
 def generate_random_targets(number: int):
     targets = []

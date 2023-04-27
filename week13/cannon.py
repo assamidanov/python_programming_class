@@ -15,10 +15,16 @@ SCREEN_SIZE = (800, 600)
 def rand_color():
     return (randint(0, 255), randint(0, 255), randint(0, 255))
 
- 
+class GameObject:
+
+    def move(self):
+        pass
+    
+    def draw(self, screen):
+        pass  
 
 
-class Shell():
+class Shell(GameObject):
     '''
     The ball class. Creates a ball, controls it's movement and implement it's rendering.
     '''
@@ -67,7 +73,7 @@ class Shell():
         pg.draw.circle(screen, self.color, self.coord, self.rad)
 
 
-class Cannon():
+class Cannon(GameObject):
     '''
     Cannon class. Manages it's renderring, movement and striking.
     '''
@@ -135,7 +141,7 @@ class Cannon():
         pg.draw.polygon(screen, self.color, gun_shape)
 
 
-class Target():
+class Target(GameObject):
     '''
     Target class. Creates target, manages it's rendering and collision with a ball event.
     '''
@@ -172,6 +178,17 @@ class Target():
         :return: None
         """
         pass
+
+class MovingTargets(Target):
+    def __init__(self, coord=None, color=None, rad=30):
+        super().__init__(coord, color, rad)
+        self.vx = randint(-2, +2)
+        self.vy = randint(-2, +2)
+    
+    def move(self):
+        self.coord[0] += self.vx
+        self.coord[1] += self.vy
+
 
 class ScoreTable:
     '''
@@ -214,6 +231,8 @@ class Manager:
         Adds new targets.
         '''
         for i in range(self.n_targets):
+            self.targets.append(MovingTargets(rad=randint(max(1, 30 - 2*max(0, self.score_t.score())),
+                30 - max(0, self.score_t.score()))))
             self.targets.append(Target(rad=randint(max(1, 30 - 2*max(0, self.score_t.score())),
                 30 - max(0, self.score_t.score()))))
 
@@ -281,6 +300,8 @@ class Manager:
                 dead_balls.append(i)
         for i in reversed(dead_balls):
             self.balls.pop(i)
+        for i, target in enumerate(self.targets):
+            target.move()
         self.gun.gain()
 
     def collide(self):

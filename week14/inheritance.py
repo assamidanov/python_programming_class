@@ -11,7 +11,7 @@ class Derivative(Base):
 
         self.name = ''
 
-a = Base(15)
+a = Base(10)
 b = Derivative()
 
 

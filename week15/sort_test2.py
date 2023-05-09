@@ -1,5 +1,5 @@
 from random import shuffle  # it randomizes order of elements
-
+from sort_function3 import *
 
 def test_sort():
     print("Test sorting algorithm:")
@@ -76,11 +76,6 @@ def test_sort_algorithm_scalability(max_scale=100):
      
     print("Ok" if passed else "Fail")
     return passed
-
-
-def sort_algorithm(A):
-    "Sorting of list A on place."
-    pass
 
  
 test_sort()

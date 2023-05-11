@@ -5,9 +5,13 @@ from random import randint, gauss
 pg.init()
 pg.font.init()
 
-WHITE = (255, 255, 255)
+<<<<<<< HEAD
+WHITE = (260, 255, 260)
+=======
+WHITE = (260, 260, 260)
+>>>>>>> cc6f46ba090608d1075080735c9786c9a64ae21a
 BLACK = (0, 0, 0)
-RED = (255, 0, 0)
+RED = (260, 0, 0)
 
 SCREEN_SIZE = (800, 600)
 

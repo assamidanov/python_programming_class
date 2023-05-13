@@ -9,6 +9,7 @@ WHITE = (255, 255, 255)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
+BLUE = (0, 0, 255)
 
 SCREEN_SIZE = (800, 600)
 
@@ -78,7 +79,7 @@ class Cannon(GameObject):
     '''
     Cannon class. Manages it's renderring, movement and striking.
     '''
-    def __init__(self, coord=[30, SCREEN_SIZE[1]//2], angle=0, max_pow=50, min_pow=10, color=RED):
+    def __init__(self, coord, angle, max_pow, min_pow, color):
         '''
         Constructor method. Sets coordinate, direction, minimum and maximum power and color of the gun.
         '''
@@ -120,12 +121,18 @@ class Cannon(GameObject):
         '''
         self.angle = np.arctan2(target_pos[1] - self.coord[1], target_pos[0] - self.coord[0])
 
-    def move(self, inc):
+    def moveYCOORD(self, inc):
         '''
         Changes vertical position of the gun.
         '''
         if (self.coord[1] > 30 or inc > 0) and (self.coord[1] < SCREEN_SIZE[1] - 30 or inc < 0):
             self.coord[1] += inc
+    def moveXCOORD(self, inc):
+        '''
+        Changes horizontal position of the gun.
+        '''
+        if (self.coord[0] - inc > 0 or inc > 0) and (self.coord[0] < SCREEN_SIZE[0] + inc or inc < 0):
+            self.coord[0] += inc
 
     def draw(self, screen):
         '''
@@ -221,7 +228,8 @@ class Manager:
     '''
     def __init__(self, n_targets=1):
         self.balls = []
-        self.gun1 = Cannon()
+        self.player = Cannon([30, SCREEN_SIZE[1]//2], angle=0, max_pow=50, min_pow=10, color=RED)
+        self.enemy = Cannon([770, SCREEN_SIZE[1]//2], angle=270, max_pow=50, min_pow=10, color=BLUE)
         self.targets = []
         self.score_t = ScoreTable()
         self.n_targets = n_targets
@@ -246,7 +254,7 @@ class Manager:
 
         if pg.mouse.get_focused():
             mouse_pos = pg.mouse.get_pos()
-            self.gun1.set_angle(mouse_pos)
+            self.player.set_angle(mouse_pos)
         
         self.move()
         self.collide()
@@ -268,17 +276,21 @@ class Manager:
                 done = True
             elif event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    self.gun1.activate()
+                    self.player.activate()
             elif event.type == pg.MOUSEBUTTONUP:
                 if event.button == 1:
-                    self.balls.append(self.gun1.strike())
+                    self.balls.append(self.player.strike())
                     self.score_t.b_used += 1
                     
         key_pressed = pg.key.get_pressed();
         if key_pressed[pg.K_UP]:
-            self.gun1.move(-5)
-        if key_pressed[pg.K_DOWN]:
-            self.gun1.move(5)
+            self.player.moveYCOORD(-5)
+        elif key_pressed[pg.K_DOWN]:
+            self.player.moveYCOORD(5)
+        elif key_pressed[pg.K_LEFT]:
+            self.player.moveXCOORD(-5)
+        elif key_pressed[pg.K_RIGHT]:
+            self.player.moveXCOORD(5)
             
         return done
 
@@ -290,7 +302,8 @@ class Manager:
             ball.draw(screen)
         for target in self.targets:
             target.draw(screen)
-        self.gun1.draw(screen)
+        self.player.draw(screen)
+        self.enemy.draw(screen)
         self.score_t.draw(screen)
 
     def move(self):
@@ -306,7 +319,7 @@ class Manager:
             self.balls.pop(i)
         for i, target in enumerate(self.targets):
             target.move()
-        self.gun1.gain()
+        self.player.gain()
 
     def collide(self):
         '''

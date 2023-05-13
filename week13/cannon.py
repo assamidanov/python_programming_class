@@ -212,7 +212,7 @@ class ScoreTable:
         score_surf.append(self.font.render("Balls used: {}".format(self.b_used), True, WHITE))
         score_surf.append(self.font.render("Total: {}".format(self.score()), True, RED))
         for i in range(3):
-            screen.blit(score_surf[i], [10, 10 + 30*i])
+            screen.blit(score_surf[i], [310, 10 + 30*i])
 
 
 class Manager:
@@ -323,7 +323,7 @@ class Manager:
 
 
 screen = pg.display.set_mode(SCREEN_SIZE)
-pg.display.set_caption("The gun of Khiryanov")
+pg.display.set_caption("Cannon Game")
 
 done = False
 clock = pg.time.Clock()

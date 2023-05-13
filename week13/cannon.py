@@ -221,7 +221,7 @@ class Manager:
     '''
     def __init__(self, n_targets=1):
         self.balls = []
-        self.gun = Cannon()
+        self.gun1 = Cannon()
         self.targets = []
         self.score_t = ScoreTable()
         self.n_targets = n_targets
@@ -246,7 +246,7 @@ class Manager:
 
         if pg.mouse.get_focused():
             mouse_pos = pg.mouse.get_pos()
-            self.gun.set_angle(mouse_pos)
+            self.gun1.set_angle(mouse_pos)
         
         self.move()
         self.collide()
@@ -267,15 +267,15 @@ class Manager:
                 done = True
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_UP:
-                    self.gun.move(-5)
+                    self.gun1.move(-5)
                 elif event.key == pg.K_DOWN:
-                    self.gun.move(5)
+                    self.gun1.move(5)
             elif event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    self.gun.activate()
+                    self.gun1.activate()
             elif event.type == pg.MOUSEBUTTONUP:
                 if event.button == 1:
-                    self.balls.append(self.gun.strike())
+                    self.balls.append(self.gun1.strike())
                     self.score_t.b_used += 1
         return done
 
@@ -287,7 +287,7 @@ class Manager:
             ball.draw(screen)
         for target in self.targets:
             target.draw(screen)
-        self.gun.draw(screen)
+        self.gun1.draw(screen)
         self.score_t.draw(screen)
 
     def move(self):
@@ -303,7 +303,7 @@ class Manager:
             self.balls.pop(i)
         for i, target in enumerate(self.targets):
             target.move()
-        self.gun.gain()
+        self.gun1.gain()
 
     def collide(self):
         '''

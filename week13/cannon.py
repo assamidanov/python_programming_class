@@ -271,6 +271,7 @@ class Manager:
         '''
         done = False
         
+        # Player actions
         for event in events:
             if event.type == pg.QUIT:
                 done = True
@@ -291,6 +292,9 @@ class Manager:
             self.player.moveXCOORD(-5)
         elif key_pressed[pg.K_RIGHT]:
             self.player.moveXCOORD(5)
+            
+        # Enemy Actions
+        
             
         return done
 

@@ -282,7 +282,7 @@ class Manager:
                     self.balls.append(self.player.strike())
                     self.score_t.b_used += 1
                     
-        key_pressed = pg.key.get_pressed();
+        key_pressed = pg.key.get_pressed()
         if key_pressed[pg.K_UP]:
             self.player.moveYCOORD(-5)
         elif key_pressed[pg.K_DOWN]:

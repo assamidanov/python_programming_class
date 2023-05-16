@@ -5,6 +5,8 @@ from random import randint, gauss
 pg.init()
 pg.font.init()
 
+font = pg.font.SysFont("Arial", 40)
+
 WHITE = (255, 255, 255)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -126,19 +128,29 @@ class Cannon(GameObject):
         self.angle = np.arctan2(
             target_pos[1] - self.coord[1], target_pos[0] - self.coord[0])
 
-    def moveYCOORD(self, inc):
+    # handle y movement of cannons
+    def move_y_coord(self, inc):
         '''
         Changes vertical position of the gun.
         '''
         if (self.coord[1] > 30 or inc > 0) and (self.coord[1] < SCREEN_SIZE[1] - 30 or inc < 0):
             self.coord[1] += inc
-
-    def moveXCOORD(self, inc):
+    # handle x movement of cannons
+    def move_x_coord(self, inc):
         '''
         Changes horizontal position of the gun.
         '''
         if (self.coord[0] - inc > 0 or inc > 0) and (self.coord[0] < SCREEN_SIZE[0] + inc or inc < 0):
             self.coord[0] += inc
+            
+    # handle collisions from ball to cannon
+    def check_collision(self, ball):
+        """
+        Checks whether the cannon collides with a ball.
+        """
+        x_collision = self.coord[0] - ball.rad <= ball.coord[0] <= self.coord[0] + self.coord[0]
+        y_collision = self.coord[1] - ball.rad <= ball.coord[1] <= self.coord[1] + self.coord[1]
+        return x_collision and y_collision
 
     def draw(self, screen):
         '''
@@ -155,7 +167,7 @@ class Cannon(GameObject):
         gun_shape.append((gun_pos + vec_2 - vec_1).tolist())
         gun_shape.append((gun_pos - vec_1).tolist())
         pg.draw.polygon(screen, self.color, gun_shape)
-
+        
 
 class Target(GameObject):
     '''
@@ -244,6 +256,10 @@ class Manager:
 
     def __init__(self, n_targets=1):
         self.balls = []
+        # create losing bool and losing_timer num
+        self.losing = False
+        self.losing_timer = None
+        # create player and enemy cannon
         self.player = Cannon([30, SCREEN_SIZE[1]//2],
                              angle=0, max_pow=50, min_pow=10, color=RED)
         self.enemy = Cannon([770, SCREEN_SIZE[1]//2],
@@ -262,12 +278,33 @@ class Manager:
                                                           30 - max(0, self.score_t.score()))))
             self.targets.append(Target(rad=randint(max(1, 30 - 2*max(0, self.score_t.score())),
                                                    30 - max(0, self.score_t.score()))))
+            
+    # function for rendering loser screen
+    def render_lose_text(self):
+        text_surface = font.render("YOU LOSE!", True, RED)
+        text_rect = text_surface.get_rect(center=(SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2))
+        screen.blit(text_surface, text_rect)
 
     def process(self, events, screen):
         '''
         Runs all necessary method for each iteration. Adds new targets, if previous are destroyed.
         '''
         done = self.handle_events(events)
+        
+        # if collide makes losing true
+        if self.losing:
+            # load in loser screen
+            screen.fill(BLACK)
+            self.render_lose_text()
+            pg.display.update()
+            
+            # allow a 2 second timer for it to run before quitting the game
+            if self.losing_timer is None:
+                self.losing_timer = pg.time.get_ticks()
+            if pg.time.get_ticks() - self.losing_timer >= 2000:
+                return True
+            
+            return False
 
         if pg.mouse.get_focused():
             mouse_pos = pg.mouse.get_pos()
@@ -288,7 +325,7 @@ class Manager:
         '''
         done = False
 
-        # Prep enemy tank
+        # prep enemy tank
         self.enemy.set_angle([90,0])
         self.enemy.activate()
         self.enemy.gain()
@@ -303,21 +340,22 @@ class Manager:
                 if event.button == 1:
                     self.balls.append(self.player.strike())
                     self.score_t.b_used += 1
-            # Once the player shots, the enemy will too
+            # once the player shots, the enemy will too
             if event.type == pg.MOUSEBUTTONUP:
                     self.balls.append(self.enemy.strike())
 
+        # player and enemy movement
         key_pressed = pg.key.get_pressed()
         if key_pressed[pg.K_UP]:
-            self.player.moveYCOORD(-5)
-            self.enemy.moveYCOORD(-5)
+            self.player.move_y_coord(-5)
+            self.enemy.move_y_coord(-5)
         elif key_pressed[pg.K_DOWN]:
-            self.player.moveYCOORD(5)
-            self.enemy.moveYCOORD(5)
+            self.player.move_y_coord(5)
+            self.enemy.move_y_coord(5)
         elif key_pressed[pg.K_LEFT]:
-            self.player.moveXCOORD(-5)
+            self.player.move_x_coord(-5)
         elif key_pressed[pg.K_RIGHT]:
-            self.player.moveXCOORD(5)
+            self.player.move_x_coord(5)
 
         return done
 
@@ -329,8 +367,10 @@ class Manager:
             ball.draw(screen)
         for target in self.targets:
             target.draw(screen)
+        # draw player and enemy cannon
         self.player.draw(screen)
         self.enemy.draw(screen)
+        
         self.score_t.draw(screen)
 
     def move(self):
@@ -363,7 +403,19 @@ class Manager:
         for j in reversed(targets_c):
             self.score_t.t_destr += 1
             self.targets.pop(j)
-
+            
+        # Checks collisions between enemy's shells and player's cannon
+        player_collisions = []
+        player_cannon = self.player
+        for i, ball in enumerate(self.balls):
+            if player_cannon.check_collision(ball):
+                player_collisions.append(i)
+        
+        # handle enemy cannon shell hitting player
+        player_collisions.sort()
+        for i in reversed(player_collisions):
+            self.losing = True
+            self.balls.pop(i)
 
 screen = pg.display.set_mode(SCREEN_SIZE)
 pg.display.set_caption("Cannon Game")

@@ -11,7 +11,7 @@ The Cannon Game project is a continuation of the project that we did in class. T
 3. Transform the cannon into a moving tank. [VAL DELEON]
 4. Create "bombs" that will be dropped by targets onto the cannon.
 5. Implement multiple cannons that can shoot at each other. [VAL DELEON]
-+ *DISCLAIMER for 5*: If player gets hit by its own Shells, this will also invoke the losing screen
++ *DISCLAIMER for 5*: If player gets hit by its own Shells, this will also invoke the losing screen.
 
 To get started, create a fork of the original project and work collaboratively to refactor the codebase. Organize the code into clear, concise, and reusable functions and modules that can be easily combined and modified as needed. Ensure that the code adheres to best practices and coding conventions for easy comprehension.
 

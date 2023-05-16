@@ -21,20 +21,20 @@ In addition to modular programming, apply OOP principles by creating classes tha
 Throughout the assignment, you are expected to communicate effectively with your group members using Git as a version control system. Git will help you collaborate, track changes, and resolve conflicts that may arise during development. Publish your final project on a GitHub page, complete with all necessary documentation and a clear README file.
 
 __##Assignment Rubric:__
-Code Organization (20 points)
-Code is organized into modules, functions, and classes (10 points)
-Proper use of structural, modular, and object-oriented programming techniques (10 points)
-Functionality (20 points)
-Code allows for easy modifications (10 points)
-Project can be adapted to various requirements (10 points)
-Collaboration (30 points)
-Effective use of Git for collaboration (10 points)
-Clear commit messages, documenting changes (10 points)
-Active communication and teamwork (10 points)
-Documentation (30 points)
-Clear README file with instructions (10 points)
-Well-documented code with comments (10 points)
-Final project published on GitHub page (10 points)
-Total: 100 points
++ Code Organization (20 points)
++ Code is organized into modules, functions, and classes (10 points)
++ Proper use of structural, modular, and object-oriented programming techniques (10 points)
++ Functionality (20 points)
++ Code allows for easy modifications (10 points)
++ Project can be adapted to various requirements (10 points)
++ Collaboration (30 points)
++ Effective use of Git for collaboration (10 points)
++ Clear commit messages, documenting changes (10 points)
++ Active communication and teamwork (10 points)
++ Documentation (30 points)
++ Clear README file with instructions (10 points)
++ Well-documented code with comments (10 points)
++ Final project published on GitHub page (10 points)
+__Total: 100 points__
 
 For a satisfactory grade, students should refactor the project using structural, modular, and object-oriented programming techniques, collaborate effectively, and present their work on a well-documented GitHub page.

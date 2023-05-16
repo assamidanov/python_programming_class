@@ -3,7 +3,7 @@ Python for Programmers -> CS2520
 
 This week's group assignment involves refactoring and extending a previous project completed in class, with an emphasis on modular programming and object-oriented programming (OOP). You will work in a group of 2-4 students to modify the code, making it more adaptable and easily modifiable for various requirements or design preferences. The primary objective of this assignment is to create a well-organized and easily modifiable codebase utilizing structural, modular, and object-oriented programming techniques.
 
-__##Project Description__
+__Project Description__
 The Cannon Game project is a continuation of the project that we did in class. The assignment tasks are as follows:
 
 1. Implement various types of projectiles.
@@ -20,7 +20,7 @@ In addition to modular programming, apply OOP principles by creating classes tha
 
 Throughout the assignment, you are expected to communicate effectively with your group members using Git as a version control system. Git will help you collaborate, track changes, and resolve conflicts that may arise during development. Publish your final project on a GitHub page, complete with all necessary documentation and a clear README file.
 
-__##Assignment Rubric:__
+__Assignment Rubric:__
 + Code Organization (20 points)
 + Code is organized into modules, functions, and classes (10 points)
 + Proper use of structural, modular, and object-oriented programming techniques (10 points)

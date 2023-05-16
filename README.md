@@ -7,7 +7,7 @@ __Project Description:__
 The Cannon Game project is a continuation of the project that we did in class. The assignment tasks are as follows:
 
 1. Implement various types of projectiles.
-2. Develop several target types with different movement patterns.
+2. Develop several target types with different movement patterns. [VANISA SUADPRATHON]
 3. Transform the cannon into a moving tank. [VAL DELEON]
 4. Create "bombs" that will be dropped by targets onto the cannon.
 5. Implement multiple cannons that can shoot at each other. [VAL DELEON]

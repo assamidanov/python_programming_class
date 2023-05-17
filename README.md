@@ -9,7 +9,7 @@ The Cannon Game project is a continuation of the project that we did in class. T
 1. Implement various types of projectiles. [JARISSE ESCUBIDO]
 2. Develop several target types with different movement patterns. [VANISA SUADPRATHON]
 3. Transform the cannon into a moving tank. [VAL DELEON]
-4. Create "bombs" that will be dropped by targets onto the cannon.
+4. Create "bombs" that will be dropped by targets onto the cannon. [GEORGE FRANSIS]
 5. Implement multiple cannons that can shoot at each other. [VAL DELEON]
 + *DISCLAIMER for 5*: If player gets hit by its own Shells, this will also invoke the losing screen.
 

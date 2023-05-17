@@ -81,12 +81,12 @@ class Shell(GameObject):
 
 class RectangleProjectile(GameObject):
     '''
-    The ball class. Creates a ball, controls it's movement and implement it's rendering.
+    The rectangle class. Creates a rectangle, controls it's movement and implement it's rendering.
     '''
 
     def __init__(self, coord, vel, height=20, width=30, color=None):
         '''
-        Constructor method. Initializes ball's parameters and initial values.
+        Constructor method. Initializes rectangle's parameters and initial values.
         '''
         self.coord = coord
         self.vel = vel
@@ -99,7 +99,7 @@ class RectangleProjectile(GameObject):
 
     def check_corners(self, refl_ort=0.8, refl_par=0.9):
         '''
-        Reflects ball's velocity when ball bumps into the screen corners. Implemetns inelastic rebounce.
+        Reflects rectangle's velocity when rectangle bumps into the screen corners. Implements inelastic rebounce.
         '''
         for i in range(2):
             if self.coord[i] < self.height:
@@ -122,8 +122,8 @@ class RectangleProjectile(GameObject):
 
     def move(self, time=1, grav=0):
         '''
-        Moves the ball according to it's velocity and time step.
-        Changes the ball's velocity due to gravitational force.
+        Moves the rectangle according to it's velocity and time step.
+        Changes the rectangle's velocity due to gravitational force.
         '''
         self.vel[1] += grav
         for i in range(2):
@@ -137,7 +137,7 @@ class RectangleProjectile(GameObject):
 
     def draw(self, screen):
         '''
-        Draws the ball on appropriate surface.
+        Draws the rectangle on appropriate surface.
         '''
         pg.draw.rect(screen, self.color, self.coord, self.height, self.width)
 
@@ -174,7 +174,7 @@ class Cannon(GameObject):
 
     def strike(self):
         '''
-        Creates ball, according to gun's direction and current charge power.
+        Creates ball and rectangle, according to gun's direction and current charge power.
         '''
         vel = self.pow
         angle = self.angle
@@ -184,7 +184,7 @@ class Cannon(GameObject):
                      int(vel * np.cos(angle)), int(vel * np.sin(angle))])
         self.pow = self.min_pow
         self.active = False
-        return ball
+        return rectangle
 
     def set_angle(self, target_pos):
         '''

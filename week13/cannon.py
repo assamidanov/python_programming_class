@@ -230,8 +230,8 @@ class Rect_Target(GameObject):
         self.width = width
         self.height = height
 
-        if color is None:
-            color = WHITE
+        if color == None:
+            color = rand_color()
         self.color = color
 
     def check_collision(self, ball):

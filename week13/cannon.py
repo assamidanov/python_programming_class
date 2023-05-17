@@ -405,6 +405,19 @@ class MovingTargets_Rect(Rect_Target):
             self.vx = -self.vx
         if self.coord[1] < self.height / 2 or self.coord[1] > SCREEN_SIZE[1] - self.height / 2:
             self.vy = -self.vy
+            
+        '''
+        COMMENT AND UNCOMMENT AS NEEDED - BUGGY CODE
+        '''
+        # Draw the circle dropped from the target
+        # Position below the target
+        circle_pos = (self.coord[0], self.coord[1] + self.rad + 10)
+        circle_radius = 5  # Radius of the circle
+        circle_color = (255, 0, 0)  # Color of the circle (red)
+        pg.draw.circle(screen, circle_color, circle_pos, circle_radius)
+        '''
+        END BUGGY CODE
+        '''
 
 '''
 Controls the movement of the triangular target. This target differs from the other targets as
@@ -627,6 +640,18 @@ class Manager:
         for i in reversed(player_collisions):
             self.losing = True
             self.balls.pop(i)
+            
+        '''
+        COMMENT AND UNCOMMENT AS NEEDED - BUGGY CODE
+        '''
+        # check collision between player cannon and moving bomb target (MovingTarget)
+        for j, target in enumerate(self.targets):
+            if player_cannon.check_collision(target):
+                self.losing = True
+                break
+        '''
+        END BUGGY CODE
+        '''
 
 screen = pg.display.set_mode(SCREEN_SIZE)
 pg.display.set_caption("Cannon Game")

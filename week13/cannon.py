@@ -184,7 +184,7 @@ class Cannon(GameObject):
                      int(vel * np.cos(angle)), int(vel * np.sin(angle))])
         self.pow = self.min_pow
         self.active = False
-        return rectangle
+        return ball or rectangle
 
     def set_angle(self, target_pos):
         '''

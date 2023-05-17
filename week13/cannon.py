@@ -35,7 +35,7 @@ class Shell(GameObject):
     The ball class. Creates a ball, controls it's movement and implement it's rendering.
     '''
 
-    def __init__(self, coord, vel, rad=None, color=None):
+    def __init__(self, coord, vel, rad=20, color=None):
         '''
         Constructor method. Initializes ball's parameters and initial values.
         '''
@@ -44,8 +44,6 @@ class Shell(GameObject):
         if color == None:
             color = rand_color()
         self.color = color
-        if rad == None:
-            rad = randint(10,40)
         self.rad = rad
         self.is_alive = True
 
@@ -216,57 +214,14 @@ class Circle_Target(GameObject):
         pass
 
 '''
-Creating a still rectangular targets. These targets will differ from the other targets since the 
-colors will be randomized and will have no motion at all. 
+Creating rectangular targets. This class will have a standardized color and the target
+will constantly be moving, unless hit by projectile. The color of this target will be WHITE to differentiate
+itself from the other targets.
 '''
-class Still_Rect_Target(GameObject):
+
+class Rect_Target(GameObject):
     '''
     Rectangle Target class. Creates rectangular target, manages it's rendering and collision with a ball event.
-    '''
-    def __init__(self, coord=None, color=None, width=60, height=30):
-        if coord is None:
-            coord = [randint(width, SCREEN_SIZE[0] - width), randint(height, SCREEN_SIZE[1] - height)]
-        self.coord = coord
-        self.width = width
-        self.height = height
-
-        if color is None:
-            color = rand_color()
-        self.color = color
-
-    def check_collision(self, ball):
-        '''
-        Checks whether the ball bumps into rectangular target.
-        '''
-        if isinstance(ball, Shell):
-            ball_pos = np.array(ball.coord)
-            closest_point = np.clip(ball_pos, self.coord - np.array([self.width / 2, self.height / 2]), self.coord + np.array([self.width / 2, self.height / 2]))
-            distance = np.linalg.norm(ball_pos - closest_point)
-            return distance <= ball.rad
-
-        return False
-        
-    def draw(self, screen):
-        '''
-        Draws the target on the screen
-        '''
-        pg.draw.rect(screen, self.color, (self.coord[0] - self.width / 2, self.coord[1] - self.height / 2, self.width, self.height))
-
-    def move(self):
-        """
-        This type of target can't move at all.
-        :return: None
-        """
-        pass
-
-'''
-This class is similar to the previous rectangular target class above. However, this class will have a standardized color
-and the target will constantly be moving, unless hit by projectile. The color of this target will be WHITE to differentiate
-itself from the other targets, especially the other rectangular one. 
-'''
-class Moving_Rect_Target(GameObject):
-    '''
-    Rectangle Target class. Creates still rectangular target, manages it's rendering and collision with a ball event.
     '''
     def __init__(self, coord=None, color=None, width=60, height=30):
         if coord is None:
@@ -366,8 +321,8 @@ class MovingTargets_Circle(Circle_Target):
          self.coord[0] += self.vx
          self.coord[1] += self.vy
 
-#controls the moving (white) rectangles. Will also bounce off of the screen, similar to the projectiles. 
-class MovingTargets_Rect(Moving_Rect_Target):
+#controls the moving rectangles. Will also bounce off of the screen, similar to the projectiles. 
+class MovingTargets_Rect(Rect_Target):
      def __init__(self, coord=None, color=None, rad=30):
          super().__init__(coord, color, rad)
          self.vx = randint(-2, +2)
@@ -393,7 +348,7 @@ it follows a circular motion. This is implemented using cos and sin functions th
 motions of a circle.
 '''
 class MovingTargets_Tri(Triangular_Target):
-    def __init__(self, coord=None, color=None, rad=60, radius=100, speed=0.05):
+    def __init__(self, coord=None, color=None, rad=30, radius=100, speed=0.05):
         super().__init__(coord, color, rad)
         self.radius = radius
         self.angle = 0
@@ -467,11 +422,9 @@ class Manager:
             self.targets.append(MovingTargets_Tri(coord=[randint(30, SCREEN_SIZE[0] - 30),
                  randint(30, SCREEN_SIZE[1] - 30)]))
 
-            #adds the still circle and rectangle targets into the game
+            #adds the still circle targets into the game
             self.targets.append(Circle_Target(rad=randint(max(1, 30 - 2*max(0, self.score_t.score())),
                  30 - max(0, self.score_t.score()))))
-            self.targets.append(Still_Rect_Target(coord=[randint(30, SCREEN_SIZE[0] - 30),
-                 randint(30, SCREEN_SIZE[1] - 30)]))
             
     # function for rendering loser screen
     def render_lose_text(self):

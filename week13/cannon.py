@@ -34,7 +34,7 @@ class Shell(GameObject):
     The ball class. Creates a ball, controls it's movement and implement it's rendering.
     '''
 
-    def __init__(self, coord, vel, rad=20, color=None):
+    def __init__(self, coord, vel, rad=None, color=None):
         '''
         Constructor method. Initializes ball's parameters and initial values.
         '''
@@ -43,6 +43,8 @@ class Shell(GameObject):
         if color == None:
             color = rand_color()
         self.color = color
+        if rad == None:
+            rad = randint(10,40)
         self.rad = rad
         self.is_alive = True
 

@@ -409,12 +409,12 @@ class MovingTargets_Rect(Rect_Target):
         '''
         COMMENT AND UNCOMMENT AS NEEDED - BUGGY CODE
         '''
-        # Draw the circle dropped from the target
-        # Position below the target
-        circle_pos = (self.coord[0], self.coord[1] + self.rad + 10)
-        circle_radius = 5  # Radius of the circle
-        circle_color = (255, 0, 0)  # Color of the circle (red)
-        pg.draw.circle(screen, circle_color, circle_pos, circle_radius)
+        # # Draw the circle dropped from the target
+        # # Position below the target
+        # circle_pos = (self.coord[0], self.coord[1] + self.rad + 10)
+        # circle_radius = 5  # Radius of the circle
+        # circle_color = (255, 0, 0)  # Color of the circle (red)
+        # pg.draw.circle(screen, circle_color, circle_pos, circle_radius)
         '''
         END BUGGY CODE
         '''
@@ -644,11 +644,11 @@ class Manager:
         '''
         COMMENT AND UNCOMMENT AS NEEDED - BUGGY CODE
         '''
-        # check collision between player cannon and moving bomb target (MovingTarget)
-        for j, target in enumerate(self.targets):
-            if player_cannon.check_collision(target):
-                self.losing = True
-                break
+        # # check collision between player cannon and moving bomb target (MovingTarget)
+        # for j, target in enumerate(self.targets):
+        #     if player_cannon.check_collision(target):
+        #         self.losing = True
+        #         break
         '''
         END BUGGY CODE
         '''

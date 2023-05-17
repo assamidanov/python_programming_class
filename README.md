@@ -6,7 +6,7 @@ This week's group assignment involves refactoring and extending a previous proje
 __Project Description:__
 The Cannon Game project is a continuation of the project that we did in class. The assignment tasks are as follows:
 
-1. Implement various types of projectiles.
+1. Implement various types of projectiles. [JARISSE ESCUBIDO]
 2. Develop several target types with different movement patterns. [VANISA SUADPRATHON]
 3. Transform the cannon into a moving tank. [VAL DELEON]
 4. Create "bombs" that will be dropped by targets onto the cannon.
